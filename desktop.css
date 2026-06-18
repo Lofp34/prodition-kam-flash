@@ -177,13 +177,62 @@ input::placeholder {
   justify-content: flex-start;
 }
 
+.filter {
+  color: var(--filter-text, #fff);
+  background: var(--filter-bg, rgba(255, 255, 255, 0.13));
+  border-color: var(--filter-border, rgba(255, 255, 255, 0.34));
+}
+
+.filter:hover,
+.filter.active {
+  color: var(--filter-active-text, #102A33);
+  background: var(--filter-active-bg, rgba(255, 255, 255, 0.82));
+  border-color: var(--filter-active-border, rgba(255, 255, 255, 0.92));
+}
+
 .cards-grid {
   min-height: 0;
   overflow: auto;
   padding: 3px 4px 8px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  grid-template-columns: 1fr;
   align-content: start;
+  gap: 16px;
+}
+
+.family-section {
+  border: 1px solid var(--family-border, rgba(255, 255, 255, 0.18));
+  border-radius: 28px;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--family-wash, rgba(255, 255, 255, 0.08)), rgba(255, 255, 255, 0.035));
+}
+
+.family-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+  color: #fff;
+}
+
+.family-header span {
+  font-size: 12px;
+  font-weight: 920;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.family-header small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
   gap: 12px;
 }
 
@@ -236,13 +285,14 @@ input::placeholder {
 
 .front {
   color: var(--text);
-  background: var(--panel-strong);
+  background:
+    linear-gradient(145deg, var(--family-card, rgba(255, 255, 255, 0.96)), rgba(255, 255, 255, 0.97));
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.16);
 }
 
 .back {
   color: #fff;
-  background: linear-gradient(145deg, #123642, #165667);
+  background: linear-gradient(145deg, var(--family-dark, #123642), #165667);
   transform: rotateY(180deg);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.18);
   overflow: auto;
@@ -252,8 +302,8 @@ input::placeholder {
   width: fit-content;
   padding: 6px 10px;
   border-radius: 999px;
-  color: var(--brand);
-  background: var(--brand-soft);
+  color: var(--family-text, var(--brand));
+  background: var(--family-chip, var(--brand-soft));
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.06em;
@@ -307,12 +357,117 @@ input::placeholder {
   border-radius: var(--radius);
 }
 
+.family-all {
+  --filter-text: #fff;
+  --filter-bg: rgba(255, 255, 255, 0.16);
+  --filter-active-text: #102A33;
+  --filter-active-bg: rgba(255, 255, 255, 0.9);
+}
+
+.family-positionnement {
+  --family-card: rgba(224, 244, 248, 0.96);
+  --family-chip: rgba(20, 87, 102, 0.14);
+  --family-text: #145766;
+  --family-wash: rgba(91, 192, 222, 0.18);
+  --family-border: rgba(91, 192, 222, 0.28);
+  --family-dark: #124A57;
+  --filter-text: #DDF7FB;
+  --filter-bg: rgba(91, 192, 222, 0.16);
+  --filter-active-text: #0E4050;
+  --filter-active-bg: rgba(201, 241, 248, 0.95);
+  --filter-active-border: rgba(201, 241, 248, 1);
+}
+
+.family-objections {
+  --family-card: rgba(250, 229, 235, 0.97);
+  --family-chip: rgba(165, 58, 92, 0.13);
+  --family-text: #8A294F;
+  --family-wash: rgba(255, 128, 171, 0.16);
+  --family-border: rgba(255, 128, 171, 0.28);
+  --family-dark: #7C2447;
+  --filter-text: #FFEAF1;
+  --filter-bg: rgba(255, 128, 171, 0.15);
+  --filter-active-text: #7C2447;
+  --filter-active-bg: rgba(255, 218, 230, 0.95);
+  --filter-active-border: rgba(255, 218, 230, 1);
+}
+
+.family-format {
+  --family-card: rgba(244, 235, 255, 0.97);
+  --family-chip: rgba(112, 80, 170, 0.13);
+  --family-text: #59419A;
+  --family-wash: rgba(168, 135, 232, 0.16);
+  --family-border: rgba(168, 135, 232, 0.28);
+  --family-dark: #493889;
+  --filter-text: #F0E9FF;
+  --filter-bg: rgba(168, 135, 232, 0.15);
+  --filter-active-text: #493889;
+  --filter-active-bg: rgba(235, 224, 255, 0.95);
+  --filter-active-border: rgba(235, 224, 255, 1);
+}
+
+.family-prix {
+  --family-card: rgba(255, 244, 217, 0.97);
+  --family-chip: rgba(176, 114, 0, 0.14);
+  --family-text: #8A5A00;
+  --family-wash: rgba(255, 193, 79, 0.16);
+  --family-border: rgba(255, 193, 79, 0.3);
+  --family-dark: #7A520F;
+  --filter-text: #FFF1CC;
+  --filter-bg: rgba(255, 193, 79, 0.16);
+  --filter-active-text: #7A520F;
+  --filter-active-bg: rgba(255, 238, 191, 0.95);
+  --filter-active-border: rgba(255, 238, 191, 1);
+}
+
+.family-livrables {
+  --family-card: rgba(226, 247, 229, 0.97);
+  --family-chip: rgba(47, 125, 70, 0.13);
+  --family-text: #2E7D46;
+  --family-wash: rgba(94, 203, 122, 0.16);
+  --family-border: rgba(94, 203, 122, 0.28);
+  --family-dark: #276B3F;
+  --filter-text: #E7FBEA;
+  --filter-bg: rgba(94, 203, 122, 0.15);
+  --filter-active-text: #276B3F;
+  --filter-active-bg: rgba(218, 247, 224, 0.95);
+  --filter-active-border: rgba(218, 247, 224, 1);
+}
+
+.family-roi {
+  --family-card: rgba(226, 238, 255, 0.97);
+  --family-chip: rgba(50, 96, 170, 0.13);
+  --family-text: #2F5FAD;
+  --family-wash: rgba(100, 149, 237, 0.16);
+  --family-border: rgba(100, 149, 237, 0.28);
+  --family-dark: #2D579C;
+  --filter-text: #EAF2FF;
+  --filter-bg: rgba(100, 149, 237, 0.15);
+  --filter-active-text: #2D579C;
+  --filter-active-bg: rgba(221, 235, 255, 0.95);
+  --filter-active-border: rgba(221, 235, 255, 1);
+}
+
+.family-closing {
+  --family-card: rgba(232, 246, 242, 0.97);
+  --family-chip: rgba(42, 130, 115, 0.13);
+  --family-text: #227B6F;
+  --family-wash: rgba(96, 211, 194, 0.16);
+  --family-border: rgba(96, 211, 194, 0.28);
+  --family-dark: #1F6C65;
+  --filter-text: #E3FBF7;
+  --filter-bg: rgba(96, 211, 194, 0.15);
+  --filter-active-text: #1F6C65;
+  --filter-active-bg: rgba(219, 248, 244, 0.95);
+  --filter-active-border: rgba(219, 248, 244, 1);
+}
+
 @media (max-width: 860px) {
   body { padding: 10px; }
   .desk-app { height: calc(100vh - 20px); padding: 14px; border-radius: 26px; }
   .topbar { display: grid; }
   .actions, .filters { justify-content: flex-start; }
   .focus-strip { grid-template-columns: 1fr; }
-  .cards-grid { grid-template-columns: 1fr; }
+  .family-grid { grid-template-columns: 1fr; }
   .card.flipped { grid-column: span 1; }
 }
