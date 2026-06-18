@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demant KAM Desk Cards</title>
+  <link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+  <main class="desk-app" id="deskApp">
+    <header class="topbar" id="dragZone">
+      <div>
+        <p class="eyebrow">Business / Demant</p>
+        <h1>Cartes d’entretien KAM</h1>
+        <p class="subtitle">Objections, prix, ROI, AIM, livrables et closing — visibles pendant la visio.</p>
+      </div>
+      <nav class="actions">
+        <button id="compactBtn" type="button">Compact</button>
+        <button id="dimBtn" type="button">Mode discret</button>
+        <button id="fullscreenBtn" type="button">Plein écran</button>
+        <button id="hideBtn" type="button">Masquer</button>
+        <button id="quitBtn" type="button" class="danger">Quitter</button>
+      </nav>
+    </header>
+
+    <section class="focus-strip" aria-label="Phrases clés">
+      <article>
+        <span>Posture</span>
+        <strong>Pas une méthode de plus : un accélérateur d’exécution.</strong>
+      </article>
+      <article>
+        <span>Prix</span>
+        <strong>On ajuste le périmètre, pas la qualité.</strong>
+      </article>
+      <article>
+        <span>Closing</span>
+        <strong>Impact 90 jours = bon équilibre.</strong>
+      </article>
+    </section>
+
+    <section class="filters" aria-label="Filtres rapides">
+      <button class="filter active" data-filter="all" type="button">Toutes</button>
+      <button class="filter" data-filter="Positionnement" type="button">Positionnement</button>
+      <button class="filter" data-filter="Objections" type="button">Objections</button>
+      <button class="filter" data-filter="Prix" type="button">Prix</button>
+      <button class="filter" data-filter="ROI" type="button">ROI</button>
+      <button class="filter" data-filter="Livrables" type="button">Livrables</button>
+      <button class="filter" data-filter="Closing" type="button">Closing</button>
+      <input id="searchInput" type="search" placeholder="Recherche rapide…">
+    </section>
+
+    <section class="cards-grid" id="cardsGrid" aria-live="polite"></section>
+
+    <footer class="shortcuts">
+      <span>Cliquer : retourner</span>
+      <span>Échap : masquer</span>
+      <span>⌘⇧D : afficher / masquer</span>
+      <span>⌘⇧F : plein écran</span>
+    </footer>
+  </main>
+
+  <script src="decks.js?v=2"></script>
+  <script src="desktop.js"></script>
+</body>
+</html>
