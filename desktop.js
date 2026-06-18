@@ -92,17 +92,15 @@ function renderCards() {
   }
 
   grid.innerHTML = visibleCards.map((card, index) => `
-    <button class="card" type="button" data-index="${index}">
+    <button class="card" type="button" data-index="${index}" aria-label="${escapeHtml(card.front)}">
       <div class="card-inner">
         <div class="face front">
           <span class="category">${escapeHtml(card.displayCategory)}</span>
           <p class="question">${escapeHtml(card.front)}</p>
-          <span class="hint">Cliquer pour afficher la réponse</span>
         </div>
         <div class="face back">
           <span class="category">${escapeHtml(card.displayCategory)}</span>
           <p class="answer">${escapeHtml(card.back)}</p>
-          <span class="hint">Cliquer pour revenir à la question</span>
         </div>
       </div>
     </button>
@@ -110,7 +108,16 @@ function renderCards() {
 
   grid.querySelectorAll('.card').forEach(cardNode => {
     cardNode.addEventListener('click', () => {
-      cardNode.classList.toggle('flipped');
+      const wasOpen = cardNode.classList.contains('flipped');
+
+      grid.querySelectorAll('.card.flipped').forEach(openCard => {
+        openCard.classList.remove('flipped');
+      });
+
+      if (!wasOpen) {
+        cardNode.classList.add('flipped');
+        cardNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
     });
   });
 }
