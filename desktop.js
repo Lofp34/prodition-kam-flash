@@ -10,9 +10,9 @@ const PRIORITY_FRONTS = [
   'Quelle phrase d’ouverture en rendez-vous ?',
   'Ce n’est pas une formation ?',
   'Quelle est la valeur ajoutée par rapport à AIM ?',
+  'Pourquoi maintenant ?',
   'Si Cédric dit : « AIM est déjà très complet. »',
   'Si Cédric dit : « Guillaume a déjà fait le travail. »',
-  'Pourquoi maintenant ?',
   'Pourquoi 90 jours ?',
   'Pourquoi seulement 3 à 5 comptes pilotes ?',
   'C’est cher pour quelques ateliers.',
@@ -27,9 +27,9 @@ const CATEGORY_ALIASES = {
   'Quelle phrase d’ouverture en rendez-vous ?': 'Positionnement',
   'Ce n’est pas une formation ?': 'Positionnement',
   'Quelle est la valeur ajoutée par rapport à AIM ?': 'Positionnement',
+  'Pourquoi maintenant ?': 'Positionnement',
   'Si Cédric dit : « AIM est déjà très complet. »': 'Objections',
   'Si Cédric dit : « Guillaume a déjà fait le travail. »': 'Objections',
-  'Pourquoi maintenant ?': 'Positionnement',
   'Pourquoi 90 jours ?': 'Format',
   'Pourquoi seulement 3 à 5 comptes pilotes ?': 'Format',
   'C’est cher pour quelques ateliers.': 'Prix',
@@ -40,6 +40,8 @@ const CATEGORY_ALIASES = {
   'Phrase de closing douce': 'Closing'
 };
 
+const FAMILY_ORDER = ['Positionnement', 'Objections', 'Format', 'Prix', 'Livrables', 'ROI', 'Closing'];
+
 let cards = [];
 let activeFilter = 'all';
 let searchTerm = '';
@@ -49,6 +51,15 @@ function normalize(value) {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
+}
+
+function familyClass(family) {
+  return `family-${normalize(family).replace(/[^a-z0-9]+/g, '-')}`;
+}
+
+function getFamilyRank(family) {
+  const rank = FAMILY_ORDER.indexOf(family);
+  return rank === -1 ? 999 : rank;
 }
 
 function getDemantCards() {
@@ -64,15 +75,19 @@ function getDemantCards() {
   }));
 
   return PRIORITY_FRONTS
-    .map(front => {
+    .map((front, priorityIndex) => {
       const card = sourceCards.find(item => item.front === front);
       if (!card) return null;
+      const displayCategory = CATEGORY_ALIASES[front] || card.category;
       return {
         ...card,
-        displayCategory: CATEGORY_ALIASES[front] || card.category
+        displayCategory,
+        priorityIndex,
+        familyClass: familyClass(displayCategory)
       };
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .sort((a, b) => getFamilyRank(a.displayCategory) - getFamilyRank(b.displayCategory) || a.priorityIndex - b.priorityIndex);
 }
 
 function renderCards() {
@@ -91,19 +106,36 @@ function renderCards() {
     return;
   }
 
-  grid.innerHTML = visibleCards.map((card, index) => `
-    <button class="card" type="button" data-index="${index}" aria-label="${escapeHtml(card.front)}">
-      <div class="card-inner">
-        <div class="face front">
-          <span class="category">${escapeHtml(card.displayCategory)}</span>
-          <p class="question">${escapeHtml(card.front)}</p>
-        </div>
-        <div class="face back">
-          <span class="category">${escapeHtml(card.displayCategory)}</span>
-          <p class="answer">${escapeHtml(card.back)}</p>
-        </div>
+  const groupedCards = FAMILY_ORDER
+    .map(family => ({
+      family,
+      cards: visibleCards.filter(card => card.displayCategory === family)
+    }))
+    .filter(group => group.cards.length);
+
+  grid.innerHTML = groupedCards.map(group => `
+    <section class="family-section ${familyClass(group.family)}">
+      <header class="family-header">
+        <span>${escapeHtml(group.family)}</span>
+        <small>${group.cards.length} carte${group.cards.length > 1 ? 's' : ''}</small>
+      </header>
+      <div class="family-grid">
+        ${group.cards.map((card, index) => `
+          <button class="card ${card.familyClass}" type="button" data-index="${index}" aria-label="${escapeHtml(card.front)}">
+            <div class="card-inner">
+              <div class="face front">
+                <span class="category">${escapeHtml(card.displayCategory)}</span>
+                <p class="question">${escapeHtml(card.front)}</p>
+              </div>
+              <div class="face back">
+                <span class="category">${escapeHtml(card.displayCategory)}</span>
+                <p class="answer">${escapeHtml(card.back)}</p>
+              </div>
+            </div>
+          </button>
+        `).join('')}
       </div>
-    </button>
+    </section>
   `).join('');
 
   grid.querySelectorAll('.card').forEach(cardNode => {
@@ -146,6 +178,7 @@ function hideWindow() {
 
 function initControls() {
   document.querySelectorAll('.filter').forEach(button => {
+    button.classList.add(familyClass(button.dataset.filter || 'all'));
     button.addEventListener('click', () => setFilter(button.dataset.filter));
   });
 
