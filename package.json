@@ -1,0 +1,13 @@
+{
+  "name": "prodition-kam-flash",
+  "version": "1.0.0",
+  "description": "Flashcards Prodition KAM avec mode bureau Demant.",
+  "main": "electron-main.js",
+  "scripts": {
+    "desktop": "electron .",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
+  }
+}
