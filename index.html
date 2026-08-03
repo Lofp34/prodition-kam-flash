@@ -24,6 +24,7 @@
 .card.flipped .front{opacity:0;visibility:hidden;transform:rotateY(180deg) translateZ(1px)}.card.flipped .back{opacity:1;visibility:visible;transform:rotateY(0) translateZ(1px)}
 .category{width:max-content;padding:7px 11px;border-radius:999px;background:var(--soft);color:var(--brand);font-size:13px;font-weight:850}.back .category{background:rgba(255,255,255,.14);color:white}
 .question{font-size:clamp(28px,4.5vw,44px);font-weight:850;line-height:1.12;letter-spacing:-.035em}.answer{font-size:clamp(21px,3.1vw,34px);font-weight:760;line-height:1.23;letter-spacing:-.025em}.hint{font-size:13px;color:var(--muted);font-weight:700;display:flex;justify-content:space-between;gap:10px}.back .hint{color:rgba(255,255,255,.7)}
+.card.media-card,.card-wrap.media-card{min-height:660px}.face.media-face{justify-content:flex-start;gap:14px;overflow-y:auto}.media{display:none;margin:0;width:100%;border-radius:18px;overflow:hidden;border:1px solid rgba(16,42,51,.12);background:rgba(255,255,255,.72);flex:0 0 auto}.media.visible{display:block}.media img{display:block;width:100%;height:300px;object-fit:cover;background:#e9eff1}.media.contain img{object-fit:contain;background:#f8fafb}.media-caption{padding:8px 10px 4px;font-size:12px;color:var(--muted);font-weight:700;line-height:1.35}.back .media-caption{color:rgba(255,255,255,.8)}.media-credit{padding:0 10px 9px;font-size:10px;line-height:1.35;color:var(--muted)}.back .media-credit{color:rgba(255,255,255,.62)}.media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}.media-error{display:grid;place-items:center;height:220px;padding:20px;text-align:center;color:var(--muted);font-size:13px;font-weight:700;background:repeating-linear-gradient(135deg,rgba(20,87,102,.04),rgba(20,87,102,.04) 12px,rgba(255,255,255,.5) 12px,rgba(255,255,255,.5) 24px)}
 .phrases{margin-top:28px;padding:22px;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:var(--r)}.phrases li{margin:9px 0;font-weight:700}.all-cards{margin-top:28px}.mini .tag{font-size:11px;text-transform:uppercase;color:var(--brand);font-weight:850}.mini h3{font-size:16px;line-height:1.25;margin:8px 0 0}
 .empty{display:none;color:var(--muted);padding:30px;text-align:center}
 @media(max-width:700px){
@@ -31,7 +32,7 @@
 #homeBtn{grid-column:1}#filterToggle{grid-column:2}#shuffle{grid-column:3}#mastered{grid-column:1/4}
 #search,#category,#reset{grid-column:1/4}.controls:not(.filters-open) #search,.controls:not(.filters-open) #category,.controls:not(.filters-open) #reset{display:none}
 .controls button,.controls input,.controls select{font-size:14px;min-height:38px;padding:8px}.stats .stat:last-child{display:none}.stat{font-size:11px;padding:6px 8px}
-.card-wrap,.card{min-height:min(610px,calc(100svh - 230px))}.face{padding:23px 21px}.question{font-size:clamp(26px,7vw,36px)}.answer{font-size:clamp(21px,6.1vw,32px)}
+.card-wrap,.card{min-height:min(610px,calc(100svh - 230px))}.card.media-card,.card-wrap.media-card{min-height:max(680px,calc(100svh - 190px))}.face{padding:23px 21px}.question{font-size:clamp(26px,7vw,36px)}.answer{font-size:clamp(21px,6.1vw,32px)}.media img{height:270px}
 .nav{position:sticky;bottom:0;padding:17px 0 6px;background:linear-gradient(180deg,rgba(245,247,248,0),rgba(245,247,248,.96) 30%)}.nav button{flex:1;padding:8px}.all-cards,.phrases{display:none}.home-grid{grid-template-columns:1fr}
 }
 </style>
@@ -56,8 +57,8 @@
 <section class="stage">
 <div class="progress"><div class="bar" id="bar"></div></div>
 <div class="card-wrap"><div class="card" id="card">
-<div class="face front"><div class="category" id="catFront"></div><div class="question" id="front"></div><div class="hint"><span>Cliquer pour voir la réponse</span><span id="idxFront"></span></div></div>
-<div class="face back"><div class="category" id="catBack"></div><div class="answer" id="back"></div><div class="hint"><span>Cliquer pour revenir</span><span id="idxBack"></span></div></div>
+<div class="face front" id="frontFace"><div class="category" id="catFront"></div><div class="media" id="mediaFront"></div><div class="question" id="front"></div><div class="hint"><span>Cliquer pour voir la réponse</span><span id="idxFront"></span></div></div>
+<div class="face back" id="backFace"><div class="category" id="catBack"></div><div class="media" id="mediaBack"></div><div class="answer" id="back"></div><div class="hint"><span>Cliquer pour revenir</span><span id="idxBack"></span></div></div>
 </div></div>
 <div class="nav"><button class="secondary" id="prev">← Précédente</button><button class="secondary" id="flip">Retourner</button><button id="next">Suivante →</button></div>
 <div class="empty" id="empty">Aucune carte ne correspond.</div>
@@ -72,6 +73,7 @@
 <script src="first317-reglages.js?v=1"></script>
 <script src="first317-manoeuvres.js?v=1"></script>
 <script src="first317-systemes.js?v=1"></script>
+<script src="first317-visual.js?v=1"></script>
 <script>
 const FOLDERS=FC_DATA.folders;
 const DECKS=FC_DATA.decks.map(d=>({...d,cards:d.cards.map(c=>Array.isArray(c)?{category:c[0],front:c[1],back:c[2]}:c)}));
@@ -110,10 +112,23 @@ window.openDeck=function(id){
  $('homeView').classList.add('hidden');$('studyView').classList.remove('hidden');renderPhrases();render();scrollTo({top:0});
 }
 function renderPhrases(){const box=$('phrasesBox');if(deck.phrases?.length){box.classList.remove('hidden');$('phrasesList').innerHTML=deck.phrases.map(p=>`<li>${p}</li>`).join('')}else box.classList.add('hidden')}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+function renderMedia(targetId,c,isBack=false){
+ const target=$(targetId);const src=(isBack&&c.imageBack)||c.image;
+ target.className='media'+(c.imageFit==='contain'?' contain':'');
+ target.innerHTML='';
+ if(!src)return;
+ target.classList.add('visible');
+ const img=document.createElement('img');img.src=src;img.alt=c.caption||c.front;img.loading='eager';img.referrerPolicy='no-referrer';
+ img.onerror=()=>{target.innerHTML=`<div class="media-error">Image indisponible — ouvre la source depuis le crédit.</div>${c.caption?`<div class="media-caption">${escapeHtml(c.caption)}</div>`:''}${c.source?`<div class="media-credit"><a href="${escapeHtml(c.source)}" target="_blank" rel="noopener noreferrer">Voir la source</a></div>`:''}`};
+ target.appendChild(img);
+ if(c.caption){const cap=document.createElement('div');cap.className='media-caption';cap.textContent=c.caption;target.appendChild(cap)}
+ if(c.credit||c.source){const cr=document.createElement('div');cr.className='media-credit';if(c.source){const a=document.createElement('a');a.href=c.source;a.target='_blank';a.rel='noopener noreferrer';a.textContent=c.credit||'Source de l’image';cr.appendChild(a)}else cr.textContent=c.credit;target.appendChild(cr)}
+}
 function render(){
  if(!filtered.length){$('empty').style.display='block';card.style.visibility='hidden';$('counter').textContent='0 carte';$('bar').style.width='0';renderList();return}
  $('empty').style.display='none';card.style.visibility='visible';index=Math.max(0,Math.min(index,filtered.length-1));
- const c=filtered[index];$('catFront').textContent=$('catBack').textContent=c.category;$('front').textContent=c.front;$('back').textContent=c.back;
+ const c=filtered[index];$('catFront').textContent=$('catBack').textContent=c.category;$('front').textContent=c.front;$('back').textContent=c.back;const hasMedia=Boolean(c.image||c.imageBack);card.classList.toggle('media-card',hasMedia);card.parentElement.classList.toggle('media-card',hasMedia);$('frontFace').classList.toggle('media-face',hasMedia);$('backFace').classList.toggle('media-face',hasMedia);renderMedia('mediaFront',c,false);renderMedia('mediaBack',c,true);
  $('idxFront').textContent=$('idxBack').textContent=`${index+1} / ${filtered.length}`;$('counter').textContent=`Carte ${index+1} / ${filtered.length}`;
  $('masteredCount').textContent=`${mastered.size} maîtrisée${mastered.size>1?'s':''}`;$('bar').style.width=`${((index+1)/filtered.length)*100}%`;
  flipped=false;card.classList.remove('flipped');$('mastered').textContent=mastered.has(cardId(c))?'Maîtrisée ✓':'Je maîtrise';renderList();
