@@ -54,7 +54,9 @@
     Promise.all([
       loadScript('poetry-deck.js?v=1'),
       loadScript('articles-study-core.js?v=1')
-    ]).catch(error=>console.warn('Chargement des extensions incomplet :',error));
+    ])
+      .then(()=>loadScript('article-agent-plugins.js?v=1'))
+      .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
   if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',start,{once:true});
