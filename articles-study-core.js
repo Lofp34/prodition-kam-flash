@@ -165,6 +165,7 @@
       'article-memory.js?v=1',
       'article-loop-engineering.js?v=1',
       'article-opacity.js?v=1',
+      'article-agent-plugins.js?v=2',
       'article-pending.js?v=1'
     ];
     files.reduce((promise,file)=>promise.then(()=>loadScript(file)),Promise.resolve())
