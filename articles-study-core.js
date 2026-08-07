@@ -33,7 +33,7 @@
     const rawDeck={
       id:deckId,
       folder:'articles-etude',
-      badge:'Article',
+      badge:article.badge||'Article',
       title,
       subtitle:article.source||'Article à étudier',
       description:article.description||article.takeaway||'Lire la source puis tester sa compréhension.',
@@ -116,18 +116,18 @@
       panel.classList.remove('hidden');
       stage.classList.add('article-quiz-hidden');
       panel.innerHTML=`
-        <div class="article-panel-top"><span class="article-kicker">Article à l’étude</span><span class="article-status">${safe(a.status||'À lire')}</span></div>
+        <div class="article-panel-top"><span class="article-kicker">${safe(a.kicker||'Article à l’étude')}</span><span class="article-status">${safe(a.status||'À lire')}</span></div>
         <h2>${safe(d.title)}</h2>
         <p class="article-source">${safe(a.source||'')}</p>
         ${a.description?`<p class="article-description">${safe(a.description)}</p>`:''}
         ${a.takeaway?`<p class="article-takeaway">${safe(a.takeaway)}</p>`:''}
         <div class="article-actions">
-          <a class="article-link" href="${safe(a.url)}" target="_blank" rel="noopener noreferrer">Lire l’article ↗</a>
-          ${a.canonicalUrl&&a.canonicalUrl!==a.url?`<a class="article-link secondary" href="${safe(a.canonicalUrl)}" target="_blank" rel="noopener noreferrer">Version lisible ↗</a>`:''}
+          <a class="article-link" href="${safe(a.url)}" target="_blank" rel="noopener noreferrer">${safe(a.primaryLabel||'Lire l’article ↗')}</a>
+          ${a.canonicalUrl&&a.canonicalUrl!==a.url?`<a class="article-link secondary" href="${safe(a.canonicalUrl)}" target="_blank" rel="noopener noreferrer">${safe(a.canonicalLabel||'Version lisible ↗')}</a>`:''}
           <button class="article-quiz" id="startArticleQuiz" ${count?'':'disabled'}>${count?`Commencer les flashcards · ${count}`:'Quiz à compléter'}</button>
         </div>
         ${a.note?`<p class="article-note">${safe(a.note)}</p>`:''}
-        ${count?`<p class="article-count">Conseil : lis d’abord l’article, puis réponds avant de retourner chaque carte.</p>`:''}
+        ${count?`<p class="article-count">Conseil : consulte d’abord la source, puis réponds avant de retourner chaque carte.</p>`:''}
       `;
       const start=document.getElementById('startArticleQuiz');
       if(start&&count)start.onclick=()=>{
@@ -166,6 +166,8 @@
       'article-loop-engineering.js?v=1',
       'article-opacity.js?v=1',
       'article-agent-plugins.js?v=2',
+      'audio-epstein-fortune.js?v=1',
+      'audio-epstein-banques.js?v=1',
       'article-pending.js?v=1'
     ];
     files.reduce((promise,file)=>promise.then(()=>loadScript(file)),Promise.resolve())
