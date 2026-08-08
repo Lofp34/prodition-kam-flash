@@ -168,6 +168,7 @@
       'article-agent-plugins.js?v=2',
       'audio-epstein-fortune.js?v=1',
       'audio-epstein-banques.js?v=1',
+      'article-schoelcher-maconnerie.js?v=1',
       'article-pending.js?v=1'
     ];
     files.reduce((promise,file)=>promise.then(()=>loadScript(file)),Promise.resolve())
