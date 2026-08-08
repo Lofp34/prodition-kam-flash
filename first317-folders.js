@@ -53,7 +53,7 @@
     setupBackButton();
     Promise.all([
       loadScript('poetry-deck.js?v=1'),
-      loadScript('articles-study-core.js?v=3')
+      loadScript('articles-study-core.js?v=4')
     ])
       .then(()=>loadScript('article-agent-plugins.js?v=2'))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
