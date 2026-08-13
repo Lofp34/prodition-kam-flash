@@ -55,7 +55,10 @@
       loadScript('poetry-deck.js?v=1'),
       loadScript('articles-study-core.js?v=5')
     ])
-      .then(()=>loadScript('article-agent-plugins.js?v=2'))
+      .then(()=>Promise.all([
+        loadScript('article-agent-plugins.js?v=2'),
+        loadScript('article-deepseek-harness.js?v=1')
+      ]))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
