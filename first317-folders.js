@@ -6,7 +6,8 @@
     {id:'f317-prise',parent:'first317',label:'Prise en main',desc:'Architecture, pont, cockpit et préparation.'},
     {id:'f317-manoeuvres',parent:'first317',label:'Manœuvres',desc:'Virements, empannages, port, mouillage et urgences.'},
     {id:'f317-reglages',parent:'first317',label:'Réglages & performance',desc:'Voiles, équilibre, vitesse et spi.'},
-    {id:'f317-systemes',parent:'first317',label:'Sécurité & systèmes',desc:'Moteur, électricité, eau, vannes, gaz et entretien.'}
+    {id:'f317-systemes',parent:'first317',label:'Sécurité & systèmes',desc:'Moteur, électricité, eau, vannes, gaz et entretien.'},
+    {id:'f317-navigation',parent:'first317',label:'Navigation & cartes',desc:'Lire les cartes marines, préparer une route et utiliser les instruments sans dépendre d’un seul écran.'}
   ];
   folders.forEach(f=>{if(!D.folders.some(x=>x.id===f.id))D.folders.push(f)});
   D.decks=D.decks.filter(d=>!String(d.id).startsWith('first317-'));
@@ -59,6 +60,11 @@
         loadScript('article-agent-plugins.js?v=2'),
         loadScript('article-deepseek-harness.js?v=1')
       ]))
+      .then(()=>loadScript('first317-navigation-data-1.js?v=1'))
+      .then(()=>loadScript('first317-navigation-data-2.js?v=1'))
+      .then(()=>loadScript('first317-navigation-data-3.js?v=1'))
+      .then(()=>loadScript('first317-navigation-data-4.js?v=1'))
+      .then(()=>loadScript('first317-navigation.js?v=1'))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
