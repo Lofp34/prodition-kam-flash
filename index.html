@@ -68,7 +68,7 @@
 </main>
 </section>
 <script src="decks.js?v=4"></script>
-<script src="first317-folders.js?v=5"></script>
+<script src="first317-folders.js?v=6"></script>
 <script src="first317-prise.js?v=1"></script>
 <script src="first317-reglages.js?v=1"></script>
 <script src="first317-manoeuvres.js?v=1"></script>
@@ -112,7 +112,7 @@ window.openDeck=function(id){
  $('homeView').classList.add('hidden');$('studyView').classList.remove('hidden');renderPhrases();render();scrollTo({top:0});
 }
 function renderPhrases(){const box=$('phrasesBox');if(deck.phrases?.length){box.classList.remove('hidden');$('phrasesList').innerHTML=deck.phrases.map(p=>`<li>${p}</li>`).join('')}else box.classList.add('hidden')}
-function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[ch]))}
 function renderMedia(targetId,c,isBack=false){
  const target=$(targetId);const src=(isBack&&c.imageBack)||c.image;
  target.className='media'+(c.imageFit==='contain'?' contain':'');
