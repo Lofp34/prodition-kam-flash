@@ -5,7 +5,7 @@
     folder:'rhetorique',
     badge:'Rhétorique',
     title:'Rhétorique — 02. Argumentation',
-    subtitle:'41 cartes pour construire, tester et réfuter un raisonnement sans tomber dans les sophismes.',
+    subtitle:'43 cartes pour construire, tester et réfuter un raisonnement sans tomber dans les sophismes.',
     description:'Passer de l’opinion à l’argument : thèse, preuves, garanties, stases, types de raisonnement et objections.',
     phrases:[
       'Une affirmation devient un argument lorsqu’elle est soutenue par des raisons reliées à la conclusion.',
