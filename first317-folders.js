@@ -65,6 +65,15 @@
       .then(()=>loadScript('first317-navigation-data-3.js?v=1'))
       .then(()=>loadScript('first317-navigation-data-4.js?v=1'))
       .then(()=>loadScript('first317-navigation.js?v=1'))
+      .then(()=>loadScript('finance-folders.js?v=1'))
+      .then(()=>Promise.all([
+        loadScript('finance-pea-cto.js?v=1'),
+        loadScript('finance-buffett-berkshire.js?v=1'),
+        loadScript('finance-munger-modeles.js?v=1'),
+        loadScript('finance-marks-graham.js?v=1'),
+        loadScript('finance-charles-gave.js?v=1'),
+        loadScript('finance-portefeuille-process.js?v=1')
+      ]))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
