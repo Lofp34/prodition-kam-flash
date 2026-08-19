@@ -78,6 +78,7 @@
       .then(()=>loadScript('rhetorique-fondamentaux.js?v=1'))
       .then(()=>loadScript('rhetorique-argumentation.js?v=1'))
       .then(()=>loadScript('rhetorique-style-pratique.js?v=1'))
+      .then(()=>loadScript('deck-archive.js?v=1'))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
