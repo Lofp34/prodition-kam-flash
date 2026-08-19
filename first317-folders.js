@@ -86,6 +86,10 @@
       .then(()=>loadScript('docker-05-exploitation-diagnostic.js?v=1'))
       .then(()=>loadScript('docker-06-securite-maitrise.js?v=1'))
       .then(()=>loadScript('deck-archive.js?v=1'))
+      .then(()=>loadScript('learning-store.js?v=1'))
+      .then(()=>loadScript('learning-tracker.js?v=1'))
+      .then(()=>loadScript('learning-rewards.js?v=1'))
+      .then(()=>loadScript('learning-dashboard.js?v=1'))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
 
