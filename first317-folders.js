@@ -78,6 +78,13 @@
       .then(()=>loadScript('rhetorique-fondamentaux.js?v=1'))
       .then(()=>loadScript('rhetorique-argumentation.js?v=1'))
       .then(()=>loadScript('rhetorique-style-pratique.js?v=1'))
+      .then(()=>loadScript('docker-folders.js?v=1'))
+      .then(()=>loadScript('docker-01-fondamentaux-cli.js?v=1'))
+      .then(()=>loadScript('docker-02-images-dockerfile.js?v=1'))
+      .then(()=>loadScript('docker-03-donnees-reseaux.js?v=1'))
+      .then(()=>loadScript('docker-04-compose.js?v=1'))
+      .then(()=>loadScript('docker-05-exploitation-diagnostic.js?v=1'))
+      .then(()=>loadScript('docker-06-securite-maitrise.js?v=1'))
       .then(()=>loadScript('deck-archive.js?v=1'))
       .catch(error=>console.warn('Chargement des extensions incomplet :',error));
   };
