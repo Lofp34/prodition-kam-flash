@@ -7,6 +7,7 @@
 
   const STORAGE_KEY='fc:learning-levels:v1';
   const PRESTIGE_STEP=250;
+  const lastItem=array=>array[array.length-1];
   const BASE_RANKS=[
     {id:'touriste-neurone',min:0,label:'Touriste du neurone',avatar:'🎒',color:'#60717a',tickets:0,blason:'Badge visiteur',description:'Tu observes les concepts avec curiosité, une gourde et un itinéraire encore très approximatif.'},
     {id:'apprenti-retourneur',min:100,label:'Apprenti retourneur de cartes',avatar:'🃏',color:'#9a6a3a',tickets:1,blason:'Cadre bronze',description:'Le bouton « Retourner » commence officiellement à craindre ton index.'},
@@ -85,7 +86,7 @@
     const sparks=Math.max(0,Math.floor(Number(Store.rewards?.sparks)||0));
     const catalog=catalogFor(sparks,true);
     const unlocked=catalog.filter(rank=>rank.min<=sparks);
-    const current=unlocked.at(-1)||BASE_RANKS[0];
+    const current=lastItem(unlocked)||BASE_RANKS[0];
     const next=catalog.find(rank=>rank.min>sparks)||prestigeRank(Math.floor((sparks-1500)/PRESTIGE_STEP)+2);
     const span=Math.max(1,next.min-current.min);
     return {
@@ -124,7 +125,7 @@
         const bonusTickets=grantBonuses(crossed,false);
         const result=originalGrantPrize(prize);
         if(crossed.length){
-          promotions.push({rank:crossed.at(-1),count:crossed.length,bonusTickets});
+          promotions.push({rank:lastItem(crossed),count:crossed.length,bonusTickets});
           setTimeout(showPromotion,650);
         }
         return {...result,rankUps:crossed.map(rank=>rank.id),rankBonusTickets:bonusTickets};
@@ -152,7 +153,7 @@
     if(unseen.length){
       unseen.forEach(markCelebrated);
       const tickets=grantBonuses(unseen,true);
-      promotions.push({rank:unseen.at(-1),count:unseen.length,bonusTickets:tickets});
+      promotions.push({rank:lastItem(unseen),count:unseen.length,bonusTickets:tickets});
       setTimeout(showPromotion,350);
     }
   }
@@ -314,7 +315,7 @@
     if(!unseen.length)return;
     unseen.forEach(markCelebrated);
     const tickets=grantBonuses(unseen,true);
-    promotions.push({rank:unseen.at(-1),count:unseen.length,bonusTickets:tickets});
+    promotions.push({rank:lastItem(unseen),count:unseen.length,bonusTickets:tickets});
     setTimeout(showPromotion,350);
   }
 
