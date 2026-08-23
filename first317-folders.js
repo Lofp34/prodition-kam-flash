@@ -58,7 +58,8 @@
     ])
       .then(()=>Promise.all([
         loadScript('article-agent-plugins.js?v=2'),
-        loadScript('article-deepseek-harness.js?v=1')
+        loadScript('article-deepseek-harness.js?v=1'),
+        loadScript('article-anthropic-fde.js?v=1')
       ]))
       .then(()=>loadScript('first317-navigation-data-1.js?v=1'))
       .then(()=>loadScript('first317-navigation-data-2.js?v=1'))
