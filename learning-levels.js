@@ -150,8 +150,8 @@
       return;
     }
     if(unseen.length){
-      const tickets=grantBonuses(unseen,true);
       unseen.forEach(markCelebrated);
+      const tickets=grantBonuses(unseen,true);
       promotions.push({rank:unseen.at(-1),count:unseen.length,bonusTickets:tickets});
       setTimeout(showPromotion,350);
     }
@@ -312,8 +312,8 @@
     if(!local.initialized)return;
     const unseen=progress().unlocked.filter(rank=>rank.min>0&&!local.celebrated[rank.id]);
     if(!unseen.length)return;
-    const tickets=grantBonuses(unseen,true);
     unseen.forEach(markCelebrated);
+    const tickets=grantBonuses(unseen,true);
     promotions.push({rank:unseen.at(-1),count:unseen.length,bonusTickets:tickets});
     setTimeout(showPromotion,350);
   }
