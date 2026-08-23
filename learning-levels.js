@@ -124,10 +124,7 @@
         crossed.forEach(markCelebrated);
         const bonusTickets=grantBonuses(crossed,false);
         const result=originalGrantPrize(prize);
-        if(crossed.length){
-          promotions.push({rank:lastItem(crossed),count:crossed.length,bonusTickets});
-          setTimeout(showPromotion,650);
-        }
+        if(crossed.length)promotions.push({rank:lastItem(crossed),count:crossed.length,bonusTickets});
         return {...result,rankUps:crossed.map(rank=>rank.id),rankBonusTickets:bonusTickets};
       };
     }
@@ -324,6 +321,7 @@
     patchStore();
     window.addEventListener('fc:learning-updated',()=>{observeViews();externalPromotions();scheduleRender()});
     window.addEventListener('fc:reward-earned',scheduleRender);
+    window.addEventListener('fc:reward-spun',()=>setTimeout(showPromotion,250));
     window.addEventListener('hashchange',()=>setTimeout(()=>{observeViews();scheduleRender()},0));
     document.addEventListener('keydown',event=>{if(event.key==='Escape'&&promotionVisible)closePromotion()});
     document.addEventListener('click',event=>{
