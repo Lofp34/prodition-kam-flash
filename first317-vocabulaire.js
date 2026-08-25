@@ -18,12 +18,14 @@
   const normalizeCard=c=>Array.isArray(c)?{category:c[0],front:c[1],back:c[2]}:c;
 
   function addDeck(rawDeck){
-    const raw={...rawDeck,folder:'f317-vocabulaire'};
+    const cards=Array.isArray(rawDeck.cards)?rawDeck.cards:[];
+    const subtitle=String(rawDeck.subtitle||'').replace(/\b\d+\s+cartes\b/,`${cards.length} cartes`);
+    const raw={...rawDeck,subtitle,cards,folder:'f317-vocabulaire'};
     D.decks=D.decks.filter(d=>d.id!==raw.id);
     D.decks.push(raw);
     try{
       if(typeof DECKS!=='undefined'){
-        const normalized={...raw,cards:(raw.cards||[]).map(normalizeCard)};
+        const normalized={...raw,cards:raw.cards.map(normalizeCard)};
         const existing=DECKS.findIndex(d=>d.id===raw.id);
         if(existing>=0)DECKS.splice(existing,1,normalized);
         else DECKS.push(normalized);
