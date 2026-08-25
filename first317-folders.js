@@ -66,6 +66,11 @@
       .then(()=>loadScript('first317-navigation-data-3.js?v=1'))
       .then(()=>loadScript('first317-navigation-data-4.js?v=1'))
       .then(()=>loadScript('first317-navigation.js?v=1'))
+      .then(()=>loadScript('first317-vocabulaire.js?v=1'))
+      .then(()=>loadScript('first317-vocabulaire-01-reperes-allures.js?v=1'))
+      .then(()=>loadScript('first317-vocabulaire-02-manoeuvres-voiles.js?v=1'))
+      .then(()=>loadScript('first317-vocabulaire-03-bateau-port.js?v=1'))
+      .then(()=>loadScript('first317-vocabulaire-04-navigation-securite.js?v=1'))
       .then(()=>loadScript('finance-folders.js?v=1'))
       .then(()=>Promise.all([
         loadScript('finance-pea-cto.js?v=1'),
